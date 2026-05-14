@@ -8,20 +8,22 @@ Scaffold a new skill using only markdown and built-in agent file tools.
 3. Never use `AskUserQuestion` or any platform-specific UI tool.
 4. Generate complete instructions, not placeholder docs.
 5. If folder exists, append `-v2`, `-v3`, etc.
+6. Sanitize skill name to `[a-z0-9-]` before any shell command.
 
 ## Build Steps
 
 ### 1. Generate Name
 - Convert goal into kebab-case.
 - Use letters, numbers, hyphens only.
-- Example: `analyze-9router-costs` → `router-observer`.
+- **Sanitize:** Remove any character not in `[a-z0-9-]`. Lowercase everything.
+- Example: `analyze 9router costs!` → `analyze-9router-costs`.
 
 ### 2. Create Folder
 Use shell command:
 ```bash
 mkdir <skill-name>
 ```
-If it fails because folder exists, create versioned folder.
+If it fails because folder exists, create versioned folder: `<skill-name>-v2`, `<skill-name>-v3`, etc.
 
 ### 3. Load Template
 Read `templates/claude-code.md`. If unavailable, use this internal structure:
@@ -40,6 +42,7 @@ Fill template with concrete content:
 - Each step must specify what to inspect, decide, and output
 - Include failure handling
 - Include exact output format
+- If `{{optional_api_instructions}}` is not needed, remove the entire line
 
 ### 5. Generate Supporting Files
 If skill needs secrets or external services, create `.env.example`.
@@ -51,6 +54,7 @@ Confirm:
 - `SKILL.md` exists inside folder
 - No placeholders remain (`{{...}}`)
 - Frontmatter contains `name` and `description`
+- No shell injection risk in generated commands
 
 ### 7. Handoff
 Output:

@@ -35,6 +35,7 @@ Goal: {{goal_description}}
 ### Step 3: Verification & Output
 - Verify outcome matches goal.
 - Present final result in clear format.
+{{optional_api_instructions}}
 
 ## Output Format
 - Terse summary.
