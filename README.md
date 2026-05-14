@@ -1,11 +1,12 @@
 <div align="center">
+  <img src="https://raw.githubusercontent.com/lunaticbugbear/skill-gen/master/assets/logo.png" alt="skill-gen logo" width="120" />
   <h1>skill-gen</h1>
   <p><b>A purely native, zero-dependency meta-compiler for AI agent skills.</b></p>
   <p>
     <a href="https://github.com/lunaticbugbear/skill-gen/blob/master/LICENSE">
       <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
     </a>
-    <img src="https://img.shields.io/badge/Platform-Claude_Code_|_Codex_|_Universal-success.svg" alt="Platform" />
+    <img src="https://img.shields.io/badge/Platform-Claude_Code_|_Codex_|_OpenCode_|_Cursor-success.svg" alt="Platform" />
     <img src="https://img.shields.io/badge/Execution-Markdown_Native-red.svg" alt="Execution" />
   </p>
 </div>
@@ -13,35 +14,66 @@
 ---
 
 ## ⚡ What is this?
-`skill-gen` is a framework for **Agentic Meta-Programming**. It allows your CLI agents (like Claude Code or Codex) to write, isolate, and audit *other* CLI agents. 
+`skill-gen` is a framework for **Agentic Meta-Programming**. It allows your CLI agents (like Claude Code, Codex, or Cursor) to write, isolate, and audit *other* CLI agents. 
 
 By running entirely within the LLM's context window via native Markdown directives, it eliminates the need for Python wrappers, Node scripts, or external dependencies. It is just raw, highly optimized system instructions.
 
-## 🧠 Core Philosophy
-1. **Zero-Dependency Native Execution**: Runs purely via the agent's built-in file and shell tools.
-2. **Strict Sandboxing**: Every generated skill is scaffolded into a quarantined directory. Path traversal and shell injection vectors are sanitized at compile time.
-3. **Self-Auditing Compilation**: The generator includes a self-verification loop that critiques its own output against the user's intent before handing off.
-
 ## 📦 Installation
 
-Since `skill-gen` is a native Markdown skill, there are no packages to install. Just clone the repository into your skills directory.
+Installation differs by harness. If you use more than one, install `skill-gen` separately for each one.
 
-### For Claude Code
+### Claude Code
+
+Available via the official Claude plugin marketplace.
+
 ```bash
-# Create your local skills directory if it doesn't exist
-mkdir -p ~/.claude/skills
-
-# Clone the repository
-git clone https://github.com/lunaticbugbear/skill-gen.git ~/.claude/skills/skill-gen
+/plugin install skill-gen@claude-plugins-official
 ```
 
-### For Codex
-```bash
-# Create your local skills directory if it doesn't exist
-mkdir -p ~/.agents/skills
+### Codex CLI
 
-# Clone the repository
-git clone https://github.com/lunaticbugbear/skill-gen.git ~/.agents/skills/skill-gen
+```bash
+# Open the plugin search interface
+/plugins
+
+# Search for skill-gen
+skill-gen
+
+# Select Install Plugin
+```
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/lunaticbugbear/skill-gen
+
+# Update later:
+gemini extensions update skill-gen
+```
+
+### OpenCode
+
+OpenCode uses its own plugin install; install `skill-gen` separately even if you already use it in another harness.
+
+Tell OpenCode:
+```text
+Fetch and follow instructions from https://raw.githubusercontent.com/lunaticbugbear/skill-gen/refs/heads/main/README.md
+```
+
+### Cursor
+
+In Cursor Agent chat, install from marketplace:
+```bash
+/add-plugin skill-gen
+```
+
+Or search for "skill-gen" in the plugin marketplace.
+
+### GitHub Copilot CLI
+
+```bash
+copilot plugin marketplace add lunaticbugbear/skill-gen-marketplace
+copilot plugin install skill-gen@skill-gen-marketplace
 ```
 
 ## 🏗️ How it Works
@@ -59,7 +91,7 @@ Navigate to the directory where you want to scaffold new skills, and invoke the 
 ```bash
 # Example using Claude Code
 cd ~/my-projects
-claude --skill ~/.claude/skills/skill-gen
+claude --skill skill-gen
 ```
 
 Then provide your intent:
