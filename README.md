@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lunaticbugbear/skill-gen/master/assets/logo.png" alt="skill-gen logo" width="120" />
   <h1>skill-gen</h1>
   <p><b>A purely native, zero-dependency meta-compiler for AI agent skills.</b></p>
   <p>
