@@ -1,48 +1,63 @@
 <div align="center">
-  <h1>🚀 skill-gen: The Agentic Meta-Compiler</h1>
-  <p><b>Enterprise-grade, zero-dependency framework for autonomous AI skill generation.</b></p>
+  <img src="https://raw.githubusercontent.com/lunaticbugbear/skill-gen/master/assets/logo.png" alt="skill-gen logo" width="120" />
+  <h1>skill-gen</h1>
+  <p><b>A purely native, zero-dependency meta-compiler for AI agent skills.</b></p>
   <p>
-    <img src="https://img.shields.io/badge/Architecture-Agentic-blue.svg" alt="Agentic" />
-    <img src="https://img.shields.io/badge/Platform-Universal-success.svg" alt="Universal" />
-    <img src="https://img.shields.io/badge/Security-Sandboxed-red.svg" alt="Security" />
+    <a href="https://github.com/lunaticbugbear/skill-gen/blob/master/LICENSE">
+      <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
+    </a>
+    <img src="https://img.shields.io/badge/Platform-Claude_Code_|_Codex_|_Universal-success.svg" alt="Platform" />
+    <img src="https://img.shields.io/badge/Execution-Markdown_Native-red.svg" alt="Execution" />
   </p>
 </div>
 
-## 🧠 What is this?
-`skill-gen` is not a script. It is an **Agentic Meta-Compiler**. It transforms natural language goals into production-ready, isolated AI agent skills (for Claude Code, Codex, Cursor, etc.) using zero-shot prompt engineering and self-auditing generation.
+---
 
-Instead of writing scripts, we write **agents that write agents**.
+## ⚡ What is this?
+`skill-gen` is a framework for **Agentic Meta-Programming**. It allows your CLI agents (like Claude Code or Codex) to write, isolate, and audit *other* CLI agents. 
 
-## 🏗️ Enterprise Architecture
+By running entirely within the LLM's context window via native Markdown directives, it eliminates the need for Python wrappers, Node scripts, or external dependencies. It is just raw, highly optimized system instructions.
 
-```mermaid
-graph TD
-    User[User Goal] -->|Natural Language| Interviewer[Context Extractor]
-    Interviewer -->|Generates| Manifest[Skill Manifest XML]
-    Manifest --> Builder[Scaffolding Engine]
-    Builder --> |Security Audit| Sandbox[Isolated Workspace]
-    Sandbox --> |Compiles| Template[Production Template]
-    Template --> |Outputs| Final[Enterprise Skill]
-    Final --> |Verification| SelfAudit[Agent Self-Audit]
-```
+## 🧠 Core Philosophy
+1. **Zero-Dependency Native Execution**: Runs purely via the agent's built-in file and shell tools.
+2. **Strict Sandboxing**: Every generated skill is scaffolded into a quarantined directory. Path traversal and shell injection vectors are sanitized at compile time.
+3. **Self-Auditing Compilation**: The generator includes a self-verification loop that critiques its own output against the user's intent before handing off.
 
-## ✨ Why it gets you promoted
-1. **Zero-Dependency Native Execution**: Built entirely in Markdown using LLM-native directives. No Python, no Node, no dependencies. It runs directly in the LLM's context window.
-2. **Strict Isolation & Sandboxing**: Every generated skill is scaffolded into a quarantined directory. Path traversal and shell injection vectors are sanitized at compile time.
-3. **Self-Auditing Output**: The generator includes a self-verification loop. It critiques its own output against the user's goal before handing off.
-4. **TDD by Default**: Generated skills inherit best practices, including input validation, graceful degradation, and concise logging.
+## 🏗️ How it Works
+
+The meta-compiler executes a deterministic pipeline within the agent's reasoning loop:
+
+1. **Context Extraction (`interviewer.md`)**: Semantically parses user intent. If vague, it cross-references project memory to propose high-leverage automation targets.
+2. **Scaffold Engine (`builder.md`)**: Sanitizes inputs (`^[a-z0-9-]+$`), instantiates an isolated workspace, and injects execution logic.
+3. **Template Compilation (`templates/claude-code.md`)**: Transforms the intent into a production-grade skill, complete with input validation and execution guardrails.
 
 ## 🚀 Usage
 
-Navigate to the directory you want to scaffold skills into, and invoke the meta-skill:
+Navigate to the directory where you want to scaffold new skills, and invoke the meta-skill:
 
 ```bash
+# Using Claude Code
 claude --skill ~/.claude/skills/skill-gen
 ```
 
-Provide your intent (e.g., *"Build a skill that audits AWS IAM roles for least-privilege violations"*). `skill-gen` will autonomously infer requirements, sandbox a workspace, and compile the skill.
+Then provide your intent:
+> *"Build a skill that audits AWS IAM roles for least-privilege violations and outputs a CSV report."*
 
-## 🛡️ Security & Compliance
-- **Sanitized Execution**: All user inputs are regex-stripped `[a-z0-9-]` before touching the file system.
-- **Stateless**: Leaves no trace outside the designated skill folder.
-- **Fail-Safe**: Includes escape hatches (`exit`, `stop`) to abort compilation safely.
+The compiler will autonomously handle the rest.
+
+## 🛡️ Security Guardrails
+- **Sanitized Execution**: All generated artifacts are regex-stripped before touching the file system.
+- **Stateless Operation**: Leaves no trace outside the designated skill folder.
+- **Escape Hatch**: Input `exit` or `abort` to safely terminate the compilation without mutating state.
+
+## 🤝 Contributing
+Contributions are welcome. Please ensure that modifications strictly adhere to the Markdown-native architecture. 
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+Distributed under the MIT License. See `LICENSE` for more information.
