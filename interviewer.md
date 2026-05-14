@@ -1,35 +1,36 @@
 ﻿# The Interviewer Instructions
 
-Extract requirements for the new skill. Be autonomous.
+Extract high-impact requirements for new AI agent missions.
 
-## Rules
-1. **Inference First:** Default to **Target: Universal** and **Tone: Goated/Terse** unless the user specifies otherwise.
-2. **No Spam:** If the user provides a goal, do not ask for it again.
-3. **One Question Max:** Group missing inputs into a single message. Do not ask one by one.
-4. **Brainstorming:** If the user is unsure, provide 3 specific, high-impact ideas based on memory/context or general usefulness.
-5. **Escape Hatch:** If the user says `exit`, `cancel`, `stop`, or equivalent, stop the flow cleanly and do not create files.
+## Mission Directives
+1. **Think Big:** If the user's intent is small, propose how to scale it (e.g., "instead of auditing one file, let's audit the entire organization").
+2. **Inference First:** Default to **Target: Universal** and **Impact: Max** unless specified otherwise.
+3. **One Question Max:** Group all missing parameters into a single, concise confirmation message.
+4. **Brainstorming:** Propose 3 high-leverage "City-Scale" ideas if the user is vague.
 
-## The Flow
+## Extraction Flow
 
-### Step 1: Goal Extraction
-Identify the goal from the user's initial prompt. If missing or ambiguous, brainstorm 3 concrete ideas and ask the user to pick or provide their own.
+### Step 1: Impact Discovery
+Analyze the user's prompt. Is it a one-off task or a reusable system?
+- If one-off: Ask how we can make it a scalable service.
+- If vague: Propose 3 concrete, high-impact automation targets based on current trends or workspace context.
 
-### Step 2: Resource Gathering
-Determine if the goal requires:
-- API Keys? -> Note to add `.env.example`.
-- Specific files? -> Note in generated instructions.
-- External dependencies/CLIs? -> Note required prerequisites.
-- Target Platform? -> Default to Universal unless a specific CLI (Claude, Codex) is requested.
+### Step 2: Architecture Mapping
+Identify necessary components:
+- **Parallelism:** Does this need sub-agents?
+- **Persistence:** Does it need a database or long-term memory?
+- **Validation:** What objective metrics define success?
+- **Platform:** Claude Code, Codex, or Universal?
 
-### Step 3: Fast Confirmation
-Present a single concise bulleted summary:
-- **Skill Name:** (proposed kebab-case name)
-- **Goal:** (1 sentence)
-- **Target Platform:** (Universal / Claude Code / Codex / etc.)
-- **Inputs Required:** (API keys, files, args)
-- **Files to Create:** (`SKILL.md`, `.env.example`, etc.)
+### Step 3: Mission Briefing (Confirmation)
+Present a single bulleted brief:
+- **Mission Name:** (kebab-case)
+- **Primary Goal:** (high-impact mission statement)
+- **Platform Architecture:** (Claude/Codex/Universal)
+- **High-Impact Features:** (Parallel dispatch, self-healing, etc.)
+- **Prerequisites:** (Secrets, files, CLIs)
 
-Ask: "Build this now? Reply yes, no, or specify changes."
+Ask: "Deploy this mission? Reply yes, no, or specify changes."
 
-- If confirmed, immediately execute Phase 2 (`builder.md`).
-- If changes requested, update the summary once and proceed after confirmation.
+- If confirmed, trigger `builder.md` immediately.
+- If "abort" or "exit", stop the flow.

@@ -1,12 +1,12 @@
 ﻿<div align="center">
   <h1>skill-gen</h1>
-  <p><b>A purely native, zero-dependency meta-compiler for AI agent skills.</b></p>
+  <p><b>Agentic Meta-Programming for City-Scale Impact.</b></p>
   <p>
     <a href="https://github.com/lunaticbugbear/skill-gen/blob/master/LICENSE">
       <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
     </a>
     <img src="https://img.shields.io/badge/Platform-Claude_Code_|_Codex_|_Cursor-success.svg" alt="Platform" />
-    <img src="https://img.shields.io/badge/Execution-Markdown_Native-red.svg" alt="Execution" />
+    <img src="https://img.shields.io/badge/Scale-City_Wide-red.svg" alt="Scale" />
   </p>
 </div>
 
@@ -14,83 +14,55 @@
 
 ## What is this?
 
-`skill-gen` is a framework for **Agentic Meta-Programming**. It allows your CLI agents (like Claude Code, Codex, or Cursor) to write, isolate, and audit *other* CLI agent skills.
+`skill-gen` is an **Agentic Meta-Compiler**. It enables your CLI agents (Claude Code, Codex, Cursor) to architect, scaffold, and deploy **autonomous missions**—not just simple tasks.
 
-By running entirely within the LLM context window via native Markdown directives, it eliminates the need for Python wrappers, Node scripts, or external dependencies. It is raw, highly optimized system instructions.
+It runs entirely within the LLM context window using native Markdown, eliminating external dependencies. It is the bridge between a simple prompt and a production-grade, fault-tolerant agentic system.
+
+## The "God Tier" Architecture
+
+Unlike basic prompt generators, `skill-gen` produces skills that are:
+- **Fault-Tolerant:** Built-in self-healing and "fail-loud" logic.
+- **Parallelized:** Optimized for multi-agent delegation and sub-task dispatch.
+- **Validation-Driven:** Absolute verification of system state before and after actions.
+- **Platform-Native:** Tailored instructions for Claude Code (`Agent` tool) and Codex CLI (`update_plan`/`apply_patch`).
 
 ## Installation
 
 ### Claude Code
-
 ```bash
 mkdir -p ~/.claude/skills
 git clone https://github.com/lunaticbugbear/skill-gen.git ~/.claude/skills/skill-gen
 ```
 
 ### Codex CLI
-
 ```bash
 mkdir -p ~/.agents/skills
 git clone https://github.com/lunaticbugbear/skill-gen.git ~/.agents/skills/skill-gen
 ```
 
-### Cursor
-
-Tell Cursor Composer or Chat:
-> *"Fetch and follow the skill instructions from `https://raw.githubusercontent.com/lunaticbugbear/skill-gen/refs/heads/master/SKILL.md`"*
-
-## How it Works
-
-The meta-compiler executes a deterministic pipeline inside the agent reasoning loop:
-
-1. **Context Extraction (`interviewer.md`)**: Parses user intent. If vague, proposes 3 high-leverage automation targets.
-2. **Scaffold Engine (`builder.md`)**: Sanitizes inputs (`^[a-z0-9-]+$`), creates an isolated workspace, selects the right template, and injects execution logic.
-3. **Template Compilation**: Transforms intent into a production-grade skill with input validation and execution guardrails.
-   - `templates/claude-code.md` — optimized for Claude Code (uses `Agent`, `Bash`, `Read`/`Write`, `Glob`).
-   - `templates/universal.md` — agnostic template for Codex, Cursor, or any markdown-compatible agent.
-
 ## Usage
 
-Navigate to the directory where you want to scaffold new skills, then invoke the meta-skill:
+Navigate to your workspace and invoke the meta-skill:
 
 ```bash
-# Claude Code
-cd ~/my-projects
+# Example: Claude Code
 claude --skill ~/.claude/skills/skill-gen
 ```
 
-Then describe your intent:
-> *"Build a skill that audits AWS IAM roles for least-privilege violations and outputs a CSV report."*
-
-The compiler will:
-1. Confirm the goal and required inputs with you in one message.
-2. Create an isolated `<skill-name>/` directory.
-3. Generate a complete, placeholder-free `SKILL.md` inside it.
-4. Optionally create `.env.example` if secrets are needed.
+**City-Scale Intent Example:**
+> *"Build a mission to audit the entire AWS organization for security vulnerabilities, auto-remediate non-compliant IAM roles, and generate a real-time Slack dashboard."*
 
 ## Templates
 
-| Template | Best For | Tools Used |
+| Template | Optimization | Key Tools |
 |---|---|---|
-| `templates/claude-code.md` | Claude Code | `Agent`, `Bash`, `Read`, `Write`, `Glob` |
-| `templates/universal.md` | Codex, Cursor, any agent | Generic shell + file operations |
-
-## Security Guardrails
-
-- **Sanitized Execution**: All generated artifacts are regex-stripped before touching the file system.
-- **Stateless Operation**: Leaves no trace outside the designated skill folder.
-- **Path Traversal Defense**: All file operations are constrained to the new `<skill-name>` directory.
-- **Escape Hatch**: Input `exit` or `abort` to safely terminate compilation without mutating state.
+| `templates/claude-code.md` | Multi-Agent Orchestration | `Agent`, `Bash`, `Read`, `Write` |
+| `templates/codex.md` | Plan-Driven Execution | `update_plan`, `apply_patch`, `shell` |
+| `templates/universal.md` | Agnostic Fallback | Native shell & file ops |
 
 ## Contributing
 
-Contributions are welcome. Please ensure modifications strictly adhere to the Markdown-native architecture.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/my-feature`)
-3. Commit your changes (`git commit -m ''feat: add my feature''`)
-4. Push to the branch (`git push origin feature/my-feature`)
-5. Open a Pull Request
+Modified architecture must adhere to `AGENTS.md`. We prioritize stability, security, and scalability.
 
 ## License
 

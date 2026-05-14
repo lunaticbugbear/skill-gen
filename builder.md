@@ -1,69 +1,51 @@
 ﻿# The Builder Instructions
 
-Scaffold a new skill using only markdown and built-in agent file tools.
+Scaffold a new high-impact AI skill using native agent tools.
 
 ## Non-Negotiable Rules
-1. Create a brand new isolated folder for every generated skill.
-2. Never write generated skill files into the current directory root.
-3. Never use `AskUserQuestion` or any platform-specific UI tool.
-4. Generate complete instructions, not placeholder docs.
-5. If folder exists, append `-v2`, `-v3`, etc.
-6. Sanitize skill name to `[a-z0-9-]` before any shell command.
+1. **Absolute Isolation:** Every skill gets a dedicated folder. Never pollute the parent directory.
+2. **Deterministic Logic:** Generate complete, production-ready instructions. No placeholders.
+3. **Safety First:** Sanitize all names to `^[a-z0-9-]+$`.
+4. **Platform Optimization:** Select the template that matches the user's environment.
 
 ## Build Steps
 
-### 1. Generate Name & Setup
-- Convert goal into kebab-case. Use letters, numbers, hyphens only.
-- **Sanitize:** Remove any character not in `[a-z0-9-]`. Lowercase everything. Example: `analyze 9router costs!` -> `analyze-9router-costs`.
+### 1. Identify Target & Template
+Determine which platform the user is targeting:
+- **Claude Code:** Use `templates/claude-code.md`.
+- **Codex CLI:** Use `templates/codex.md`.
+- **Generic/Universal:** Use `templates/universal.md`.
 
-### 2. Create Directory
-Use shell command:
-```bash
-mkdir <skill-name>
-```
-If it fails because the folder exists, create a versioned folder: `<skill-name>-v2`, `<skill-name>-v3`, etc.
+### 2. Sanitize & Scaffold
+- Sanitize the skill name to kebab-case: `[a-z0-9-]`.
+- Create the directory: `mkdir <skill-name>`.
+- If folder exists, use versioning: `<skill-name>-v2`, etc.
 
-### 3. Select & Load Template
-Determine the agent platform the user is likely targeting (Claude Code, Codex, or Universal).
-- Claude Code: Read `templates/claude-code.md`
-- Universal/Other: Read `templates/universal.md`
+### 3. Generate `SKILL.md`
+Transform the selected template into a mission-critical `SKILL.md`:
+- **Mission Realism:** Define the goal with concrete, high-impact language.
+- **Fail-Safe Logic:** Inject specific validation steps and self-healing instructions relevant to the goal.
+- **Orchestration:** If the task is large (city-scale), add specific instructions for parallel execution and sub-agent delegation.
+- **Remove Junk:** Delete any unused `{{optional_api_instructions}}` or empty input lists.
 
-*Fallback:* If reading fails, use this internal structure:
-- YAML frontmatter (`name`, `description`)
-- Overview & Goal
-- Constraints
-- When to Use
-- Required Inputs
-- Workflow (Initialization, Action, Verification)
-- Expected Output Format
+### 4. Supporting Infrastructure
+- Create `.env.example` if the skill requires API keys or secrets.
+- Create a `docs/` folder if the skill requires complex architectural specs.
+- If the skill requires specific datasets, add notes on where to place them.
 
-### 4. Generate `SKILL.md`
-Fill the selected template with concrete content, writing it to `<skill-name>/SKILL.md`:
-- No unresolved placeholders (`{{...}}`).
-- No vague steps like "do the task". Detail the exact commands or logical steps.
-- Each step must specify what to inspect, decide, and output.
-- Include failure handling and exact output format.
-- If `{{optional_api_instructions}}` is not needed, remove the entire line.
+### 5. The Quality Gate (QA)
+Before finishing, run shell commands to verify:
+- `SKILL.md` is complete and contains zero `{{` placeholders.
+- The directory structure is clean and correctly named.
+- The workflow logic is logical and covers common failure modes.
 
-### 5. Generate Supporting Files
-- If the skill needs secrets, create `<skill-name>/.env.example`.
-- If the skill needs reusable prompts or context, create `<skill-name>/references/` (only when strictly necessary).
-
-### 6. Verification
-Run shell commands (`ls -la <skill-name>`, `cat <skill-name>/SKILL.md` or equivalent) to confirm:
-- Folder exists.
-- `SKILL.md` exists inside the folder and is non-empty.
-- No placeholders remain (`{{...}}`).
-- Frontmatter contains `name` and `description`.
-- No shell injection risk in generated commands.
-
-### 7. Handoff
+### 6. Handoff
 Output exactly:
 ```text
-Skill created: ./<skill-name>/SKILL.md
+Mission-Ready Skill created: ./<skill-name>/SKILL.md
 
-Use:
+Usage:
 cd <skill-name>
-<agent-cli-command> --skill .
+<agent-command> --skill .
 ```
-(Replace `<agent-cli-command>` with `claude`, `codex`, etc. depending on context).
+(Replace `<agent-command>` with `claude`, `codex`, etc.).
