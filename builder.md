@@ -1,4 +1,4 @@
-# The Builder Instructions
+﻿# The Builder Instructions
 
 Scaffold a new skill using only markdown and built-in agent file tools.
 
@@ -12,56 +12,58 @@ Scaffold a new skill using only markdown and built-in agent file tools.
 
 ## Build Steps
 
-### 1. Generate Name
-- Convert goal into kebab-case.
-- Use letters, numbers, hyphens only.
-- **Sanitize:** Remove any character not in `[a-z0-9-]`. Lowercase everything.
-- Example: `analyze 9router costs!` → `analyze-9router-costs`.
+### 1. Generate Name & Setup
+- Convert goal into kebab-case. Use letters, numbers, hyphens only.
+- **Sanitize:** Remove any character not in `[a-z0-9-]`. Lowercase everything. Example: `analyze 9router costs!` -> `analyze-9router-costs`.
 
-### 2. Create Folder
+### 2. Create Directory
 Use shell command:
 ```bash
 mkdir <skill-name>
 ```
-If it fails because folder exists, create versioned folder: `<skill-name>-v2`, `<skill-name>-v3`, etc.
+If it fails because the folder exists, create a versioned folder: `<skill-name>-v2`, `<skill-name>-v3`, etc.
 
-### 3. Load Template
-Read `templates/claude-code.md`. If unavailable, use this internal structure:
-- YAML frontmatter
-- Overview
+### 3. Select & Load Template
+Determine the agent platform the user is likely targeting (Claude Code, Codex, or Universal).
+- Claude Code: Read `templates/claude-code.md`
+- Universal/Other: Read `templates/universal.md`
+
+*Fallback:* If reading fails, use this internal structure:
+- YAML frontmatter (`name`, `description`)
+- Overview & Goal
+- Constraints
 - When to Use
-- Inputs
-- Workflow
-- Output Format
-- Common Mistakes
+- Required Inputs
+- Workflow (Initialization, Action, Verification)
+- Expected Output Format
 
 ### 4. Generate `SKILL.md`
-Fill template with concrete content:
-- No unresolved placeholders
-- No vague steps like "do the task"
-- Each step must specify what to inspect, decide, and output
-- Include failure handling
-- Include exact output format
-- If `{{optional_api_instructions}}` is not needed, remove the entire line
+Fill the selected template with concrete content, writing it to `<skill-name>/SKILL.md`:
+- No unresolved placeholders (`{{...}}`).
+- No vague steps like "do the task". Detail the exact commands or logical steps.
+- Each step must specify what to inspect, decide, and output.
+- Include failure handling and exact output format.
+- If `{{optional_api_instructions}}` is not needed, remove the entire line.
 
 ### 5. Generate Supporting Files
-If skill needs secrets or external services, create `.env.example`.
-If skill needs reusable prompts or references, create `references/` only when necessary.
+- If the skill needs secrets, create `<skill-name>/.env.example`.
+- If the skill needs reusable prompts or context, create `<skill-name>/references/` (only when strictly necessary).
 
-### 6. Verify
-Confirm:
-- Folder exists
-- `SKILL.md` exists inside folder
-- No placeholders remain (`{{...}}`)
-- Frontmatter contains `name` and `description`
-- No shell injection risk in generated commands
+### 6. Verification
+Run shell commands (`ls -la <skill-name>`, `cat <skill-name>/SKILL.md` or equivalent) to confirm:
+- Folder exists.
+- `SKILL.md` exists inside the folder and is non-empty.
+- No placeholders remain (`{{...}}`).
+- Frontmatter contains `name` and `description`.
+- No shell injection risk in generated commands.
 
 ### 7. Handoff
-Output:
+Output exactly:
 ```text
 Skill created: ./<skill-name>/SKILL.md
 
 Use:
 cd <skill-name>
-claude --skill .
+<agent-cli-command> --skill .
 ```
+(Replace `<agent-cli-command>` with `claude`, `codex`, etc. depending on context).
