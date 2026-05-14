@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lunaticbugbear/skill-gen/master/assets/logo.png" alt="skill-gen logo" width="120" />
   <h1>skill-gen</h1>
   <p><b>A purely native, zero-dependency meta-compiler for AI agent skills.</b></p>
   <p>
@@ -23,6 +22,28 @@ By running entirely within the LLM's context window via native Markdown directiv
 2. **Strict Sandboxing**: Every generated skill is scaffolded into a quarantined directory. Path traversal and shell injection vectors are sanitized at compile time.
 3. **Self-Auditing Compilation**: The generator includes a self-verification loop that critiques its own output against the user's intent before handing off.
 
+## 📦 Installation
+
+Since `skill-gen` is a native Markdown skill, there are no packages to install. Just clone the repository into your skills directory.
+
+### For Claude Code
+```bash
+# Create your local skills directory if it doesn't exist
+mkdir -p ~/.claude/skills
+
+# Clone the repository
+git clone https://github.com/lunaticbugbear/skill-gen.git ~/.claude/skills/skill-gen
+```
+
+### For Codex
+```bash
+# Create your local skills directory if it doesn't exist
+mkdir -p ~/.agents/skills
+
+# Clone the repository
+git clone https://github.com/lunaticbugbear/skill-gen.git ~/.agents/skills/skill-gen
+```
+
 ## 🏗️ How it Works
 
 The meta-compiler executes a deterministic pipeline within the agent's reasoning loop:
@@ -36,7 +57,8 @@ The meta-compiler executes a deterministic pipeline within the agent's reasoning
 Navigate to the directory where you want to scaffold new skills, and invoke the meta-skill:
 
 ```bash
-# Using Claude Code
+# Example using Claude Code
+cd ~/my-projects
 claude --skill ~/.claude/skills/skill-gen
 ```
 
@@ -55,7 +77,7 @@ Contributions are welcome. Please ensure that modifications strictly adhere to t
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
